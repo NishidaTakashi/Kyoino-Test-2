@@ -11,3 +11,32 @@
 table{
   display: inline-block;
 }
+
+th {
+  cursor: pointer;
+  padding: 2px 4px;
+}
+th:after {
+  content: '\f0dc';
+  font-family: FontAwesome;
+  font-size: 14px;
+  color: #ccc;
+  float: center;
+  padding: 10px 4px;
+  font-weight: normal;
+}
+th.asc:after {
+  content: '\f0de';
+  font-family: FontAwesome;
+  color: #000;
+}
+th.desc:after {
+  content: '\f0dd';
+  font-family: FontAwesome;
+  color: #000;
+}
+
+td{
+  text-align: right;
+  padding:2px 4px;
+}
