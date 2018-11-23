@@ -33,11 +33,17 @@ class Tax2 extends CI_Controller {
 	}
 
 	public function login(){
+
+		$this->form_validation->set_rules("name","ID","trim|required",array(
+			"required" => "%s を入力していません。"
+		));
+		$this->form_validation->set_rules("password","パスワード","trim|required");
+
 		$data["user_name"]=$this->Tax2_model->login();
 		$data["users"]=$this->Tax2_model->get_tax();
 
-		if ($data["user_name"]===false) {
-			redirect("tax2","refresh");
+		if ($this->form_validation->run() === false || $data["user_name"] === false) {
+			$this->load->view("user_login",$data);
 		}else{
 			$this->load->view("tax2",$data);
 		}
@@ -50,14 +56,21 @@ class Tax2 extends CI_Controller {
 
 	public function insert(){
 		//validation
-
-		//passwordとre-passwordの条件分岐
+		$this->form_validation->set_rules("name","ID","trim|required|is_unique[users.name]",array(
+			"required" => "%s を入力していません。",
+			"is_unique" => "その %s はすでに存在しています。"
+		));
+		$this->form_validation->set_rules("password","パスワード","trim|required");
+		$this->form_validation->set_rules("re-password","再パスワード","trim|required|matches[password]");
 
 
 		//modelのadd関数を呼び出す
-
-		$this->Tax2_model->insert($_POST);
-		redirect("tax2","refresh");
+		if ($this->form_validation->run() === false) {
+			$this->load->view("user_add");
+		}else{
+			$this->Tax2_model->insert($_POST);
+			redirect("tax2","refresh");
+		}
 	}
 
 

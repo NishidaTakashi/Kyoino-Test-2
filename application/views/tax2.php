@@ -17,7 +17,6 @@
       </div>
       <h1>消費税一覧</h1>
 
-      <!-- <?php echo (!function_exists("mcrypt_encrypt"))? "No" : "Yes" ; ?> -->
 
 
       <!-- 機能確認のための登録者表示 -->

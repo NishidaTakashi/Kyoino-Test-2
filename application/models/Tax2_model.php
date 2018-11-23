@@ -9,23 +9,21 @@ class Tax2_model extends CI_Model{
 
   public function insert(){
     $this->name=$_POST["name"];
-    $this->password=$_POST["password"];
+    $this->password=password_hash($_POST["password"],PASSWORD_BCRYPT);
     $this->db->insert("users",$this);
   }
 
   public function login(){
     $this->db->where("name",$this->input->post("name"));
-    $this->db->where("password",$this->input->post("password"));
     $query=$this->db->get("users");
+    $users=$query->row_array();
 
-    if($query->num_rows()===1){
-      return $query->row_array();
+    if (password_verify($_REQUEST['password'],$users["password"])) {
+      return $users;
     }else{
       return false;
     }
   }
-
-
 
   //機能確認用。ここから--
 

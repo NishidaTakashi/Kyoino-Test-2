@@ -2,24 +2,27 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>ログイン画面</title>
     <link rel="stylesheet" href="<?php echo base_url();?>css/styles.css">
 
   </head>
   <body>
     <div class="container">
       <div class="user">
+
+        <?php echo validation_errors(); ?>
+
         <?php echo form_open("tax2/login") ?>
         <h3>
           ログイン画面
         </h3>
         <p>
           <label for="name">ID</label>
-          <input type="text" name="name" value="">
+          <input type="text" name="name" value="<?php echo set_value('name'); ?>">
         </p>
         <p>
           <label for="password">パスワード</label>
-          <input type="text" name="password" value="">
+          <input type="text" name="password" value="<?php echo set_value('password'); ?>">
         </p>
         <p>
           <input type="submit" name="" value="ログイン">
