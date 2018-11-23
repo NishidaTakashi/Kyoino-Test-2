@@ -9,25 +9,25 @@
   <body>
     <div class="container">
       <div class="user">
-        <?php form_open("tax2/add") ?>
+        <?php echo form_open("tax2/insert"); ?>
         <h3>
           新規登録画面
         </h3>
         <p>
-          <label for="ID">ID</label>
-          <input type="text" name="" value="">
+          <label for="name">ID</label>
+          <input type="text" name="name" value="">
         </p>
         <p>
           <label for="password">パスワード</label>
-          <input type="text" name="" value="">
+          <input type="text" name="password" value="">
         </p>
         <p>
           <label for="re-password">再パスワード</label>
-          <input type="text" name="" value="">
+          <input type="text" name="re-password" value="">
         </p>
         <input type="submit" name="" value="追加">
 
-        <?php form_close(); ?>
+        <?php echo form_close(); ?>
       </div>
 
     </div>
