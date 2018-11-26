@@ -75,7 +75,8 @@ jQuery(document).ready(function($){
     $(this).text("");
 
     $(this).attr("id","edit");
-    $(this).append("<input type='text'>")
+    $(this).append("<input type='text'>");
+    $("input").attr("value",text);
     console.log(text);
   })
 })
