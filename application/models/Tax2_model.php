@@ -17,9 +17,13 @@ class Tax2_model extends CI_Model{
 
   public function update(){
 
-    $id=$_POST["id"];
-    $data->start=$_POST["start"];
-    $data->rate=$_POST["rate"];
+    // $id=$_POST["id"];
+    // $data->start=$_POST["start"];
+    // $data->rate=$_POST["rate"];
+
+    $id= $this->input->post('id');
+    $data->start= $this->input->post('start');
+    $data->rate= $this->input->post('rate');
 
     $this->db->where("id",$id);
     $this->db->update("tax2",$data);

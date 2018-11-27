@@ -11,7 +11,7 @@
 
       <h3>消費税設定の一覧</h3>
       <table class="database">
-        <?php echo form_open("tax2/update"); ?>
+        <!-- <?php echo form_open("tax2/update"); ?> -->
 
         <thead>
           <tr>
@@ -34,7 +34,7 @@
         <?php endforeach; ?>
 
         </tbody>
-        <?php echo form_close(); ?>
+        <!-- <?php echo form_close(); ?> -->
 
       </table>
     </div>

@@ -15,7 +15,7 @@
   //       }
   //     }
 
-  function updateStart(){
+  function updateStart(text){
     for (var i = 0; i < start.length; i++) {
       start[i]. addEventListener("click",function(){
         if (this.getAttribute("id")==="edit") {
@@ -38,8 +38,6 @@
               id:start,
               start:text,
               rate:3
-            },function(data){
-              alert("送信");
             });
             // $.ajax({
             //   type:"post",
@@ -62,6 +60,9 @@
             //   }
             // });
           });
+          if (text==="") {
+            text=textall
+          }
           edit.textContent=text;
           edit.removeAttribute("id");
           flag *=-1;
@@ -95,6 +96,7 @@
   }
 
 
+
   // function updateRate(){
   //   var i;
   //   for (var i = 0; i < rate.length; i++) {
@@ -106,6 +108,7 @@
 
   // update();
   updateStart();
+
   // updateRate();
 
 })();

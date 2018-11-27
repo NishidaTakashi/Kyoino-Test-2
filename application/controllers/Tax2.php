@@ -15,10 +15,10 @@ class Tax2 extends CI_Controller {
 	}
 
 	public function update(){
-		// サーバ側でもってるデータ
-		$array = array(
-		    array('framework' => 'codeigniter', 'lang' => 'php',),
-		);
+		// // サーバ側でもってるデータ
+		// $array = array(
+		//     array('framework' => 'codeigniter', 'lang' => 'php',),
+		// );
 
 		// //postで送られてきたデータ
 		// $post_data = $this->input->post('start');
@@ -39,7 +39,7 @@ class Tax2 extends CI_Controller {
 		if ($this->form_validation->run() === FALSE) {
 			redirect("tax2","refresh");
 		}else {
-			$this->Tax2_model->update($_POST);
+			$this->Tax2_model->update();
 			redirect("tax2","refresh");
 		}
 	}
