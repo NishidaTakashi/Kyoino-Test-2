@@ -28,7 +28,9 @@
               <td class="rate">
               <?php echo $tax["rate"];?>%
               </td>
+              <input type="hidden" class="id" name="id" value="<?php echo $tax["id"]; ?>">
           </tr>
+
         <?php endforeach; ?>
 
         </tbody>

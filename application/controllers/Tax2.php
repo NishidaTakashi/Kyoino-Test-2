@@ -15,12 +15,31 @@ class Tax2 extends CI_Controller {
 	}
 
 	public function update(){
+		// サーバ側でもってるデータ
+		$array = array(
+		    array('framework' => 'codeigniter', 'lang' => 'php',),
+		);
+
+		// //postで送られてきたデータ
+		// $post_data = $this->input->post('start');
+		// $post_data = $this->input->post('id');
+		// $post_data = $this->input->post('rate');
+
+		// //postデータをもとに$arrayからデータを抽出
+		// $data = $array[$post_data];
+		//
+		// //$dataをJSONにして返す
+		// $this->output
+		// 		 ->set_content_type('application/json')
+		// 		 ->set_output(json_encode($data));
+
+
 		$this->form_validation->set_rules("start","開始日付","required");
 		$this->form_validation->set_rules("rate","税率","required");
 		if ($this->form_validation->run() === FALSE) {
 			redirect("tax2","refresh");
 		}else {
-			$this->Tax_model->update($_POST);
+			$this->Tax2_model->update($_POST);
 			redirect("tax2","refresh");
 		}
 	}

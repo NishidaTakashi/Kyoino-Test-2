@@ -10,12 +10,13 @@ class Tax2_model extends CI_Model{
   }
 
   public function get_tax(){
-    $this->db->order_by("start","ASC");
+    // $this->db->order_by("start","ASC");
     $query=$this->db->get("tax2");
     return $query->result_array();
   }
 
   public function update(){
+
     $id=$_POST["id"];
     $data->start=$_POST["start"];
     $data->rate=$_POST["rate"];
