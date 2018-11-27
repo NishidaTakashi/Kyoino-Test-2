@@ -23,7 +23,6 @@
           <?php foreach ($taxes as $tax): ?>
           <tr>
               <td class="start">
-                <!-- <input type="text" name="" value="<?php echo $tax['start'];?>"> -->
               <?php echo $tax["start"];?>
               </td>
               <td class="rate">

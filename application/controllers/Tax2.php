@@ -13,4 +13,15 @@ class Tax2 extends CI_Controller {
 		$data["taxes"]=$this->Tax2_model->get_tax();
 		$this->load->view("tax2",$data);
 	}
+
+	public function update(){
+		$this->form_validation->set_rules("start","開始日付","required");
+		$this->form_validation->set_rules("rate","税率","required");
+		if ($this->form_validation->run() === FALSE) {
+			redirect("tax2","refresh");
+		}else {
+			$this->Tax_model->update($_POST);
+			redirect("tax2","refresh");
+		}
+	}
 }
