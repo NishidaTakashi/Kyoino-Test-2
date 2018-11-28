@@ -33,9 +33,11 @@ class Tax2 extends CI_Controller {
 		// 		 ->set_content_type('application/json')
 		// 		 ->set_output(json_encode($data));
 
-
-		$this->form_validation->set_rules("start","開始日付","required");
-		$this->form_validation->set_rules("rate","税率","required");
+		if ($this->input->post("start")) {
+			$this->form_validation->set_rules("start","開始日付","required");
+		}else if ($this->input->post("rate")) {
+			$this->form_validation->set_rules("rate","税率","required");
+		}
 		if ($this->form_validation->run() === FALSE) {
 			redirect("tax2","refresh");
 		}else {

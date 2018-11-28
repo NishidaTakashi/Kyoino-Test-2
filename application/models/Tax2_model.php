@@ -22,8 +22,11 @@ class Tax2_model extends CI_Model{
     // $data->rate=$_POST["rate"];
 
     $id= $this->input->post('id');
-    $data->start= $this->input->post('start');
-    $data->rate= $this->input->post('rate');
+    if ($this->input->post('start')) {
+      $data->start= $this->input->post('start');
+    }else if ($this->input->post('rate')) {
+      $data->rate= $this->input->post('rate');
+    }
 
     $this->db->where("id",$id);
     $this->db->update("tax2",$data);
