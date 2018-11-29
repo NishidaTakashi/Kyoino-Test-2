@@ -9,7 +9,13 @@
   </head>
   <body>
     <div class="container">
-
+           <div class="login">
+          <p>
+            ID
+            <?php echo $user_name["name"]; ?>
+          </p>
+          <?php echo anchor("tax2/logout","ログアウト") ?>
+      </div>
       <h3>消費税設定の一覧</h3>
       <table class="database">
         <thead>

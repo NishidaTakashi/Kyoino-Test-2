@@ -1,6 +1,8 @@
 .container{
   text-align: center;
   font-size: 18px;
+  width: 400px;
+  display: inline-block;
 }
 
 .database,.database th,.database td{
@@ -48,4 +50,16 @@ td{
 }
 #updateRate{
   width: 32px;
+
+.login{
+  float: right;
+}
+
+body{
+  text-align: center;
+}
+
+.user{
+  width: 300px;
+  text-align: right;
 }
