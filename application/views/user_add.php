@@ -8,14 +8,14 @@
   </head>
   <body>
     <div class="container">
+      <?php echo validation_errors(); ?>
+
+      <?php echo form_open("tax2/insert"); ?>
+      <h3>
+        新規登録画面
+      </h3>
       <div class="user">
 
-        <?php echo validation_errors(); ?>
-
-        <?php echo form_open("tax2/insert"); ?>
-        <h3>
-          新規登録画面
-        </h3>
         <p>
           <label for="name">ID</label>
           <input type="text" name="name" value="<?php echo set_value('name'); ?>">
@@ -28,10 +28,11 @@
           <label for="re-password">再パスワード</label>
           <input type="text" name="re-password" value="<?php echo set_value('re-password'); ?>">
         </p>
-        <input type="submit" name="" value="追加">
-
-        <?php echo form_close(); ?>
       </div>
+
+      <input type="submit" name="" value="追加">
+
+      <?php echo form_close(); ?>
 
     </div>
   </body>
