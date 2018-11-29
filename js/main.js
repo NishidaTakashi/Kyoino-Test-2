@@ -1,7 +1,6 @@
 (function() {
   'use strict';
 
-  var ths = document.getElementsByTagName('th');
   var start=document.getElementById("start");
   var rate=document.getElementById("rate");
   var sortOrderStart = 1; // 1: 昇順、-1: 降順
@@ -22,7 +21,6 @@
   }
 
   //"開始日付"のクラス名をコントロールする関数
-  //可能なら上の関数と合わせて一つにしたいがちょっと思いつかないので保留。後日再検討
   function updateStartClassName() {
     //"税率"のクラスの名を削除
     rate.className="";
@@ -40,8 +38,7 @@
   }
 
 
-  //"開始日付"のテーブルのsortを実行するための関数
-  //同様に関数をまとめたい。後日再検討。
+  //"開始日付"の列のsortを実行するための関数
   function sortStartRows() {
     //テーブルの中身をrowsに格納
     var rows = Array.prototype.slice.call(document.querySelectorAll('tbody > tr'));
@@ -57,7 +54,7 @@
     return rows;
   }
 
-  //"税率"のテーブルのsortを実行するための関数（内容に関するコメントは割愛）
+  //"税率"のテーブルの列を実行するための関数（内容に関するコメントは割愛）
   function sortRateRows() {
     var rows = Array.prototype.slice.call(document.querySelectorAll('tbody > tr'));
     var col = rate.cellIndex;
@@ -70,8 +67,10 @@
 
   //ソートの条件の関数
   function compare(a, b, col, type) {
+    //セルの内容を取得
     var _a = a.children[col].textContent;
     var _b = b.children[col].textContent;
+    //邪魔な要素を削除のうえ、数値に変換
     if (type === "rate") {
       _a = _a.replace("%","")*1;
       _b = _b.replace("%","")*1;
@@ -79,6 +78,7 @@
       _a = _a.replace(/-/g,"0")*1;
       _b = _b.replace(/-/g,"0")*1;
     }
+    //compareに返り値を設定し、ソートを管理する
     if (_a < _b) {
       return -1;
     }
@@ -89,7 +89,6 @@
   }
 
   //上記で出てきた関数を"開始日付"のthをクリックで起動するための関数
-  //こちらもまとめたい
   function setupStart() {
       start.addEventListener('click', function() {
         //rowsを定義して…
