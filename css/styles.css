@@ -1,14 +1,62 @@
+.container{
+  text-align: center;
+  font-size: 18px;
+  width: 400px;
+  display: inline-block;
+}
+
+.database,.database th,.database td{
+  border: 1px #000000 solid;
+  border-collapse: collapse;
+}
+
+table{
+  display: inline-block;
+}
+
+th {
+  cursor: pointer;
+  padding: 2px 4px;
+}
+th:after {
+  content: '\f0dc';
+  font-family: FontAwesome;
+  font-size: 14px;
+  color: #ccc;
+  float: center;
+  padding: 10px 4px;
+  font-weight: normal;
+}
+th.asc:after {
+  content: '\f0de';
+  font-family: FontAwesome;
+  color: #000;
+}
+th.desc:after {
+  content: '\f0dd';
+  font-family: FontAwesome;
+  color: #000;
+}
+
+td{
+  text-align: right;
+  padding:2px 4px;
+}
+
+/* jqueryで新しくできたinput要素の大きさをコントロール */
+
+#updateStart{
+  width: 90px;
+}
+#updateRate{
+  width: 32px;
+
 .login{
   float: right;
 }
 
 body{
   text-align: center;
-
-}
-.container{
-  width: 400px;
-  display: inline-block;
 }
 
 .user{
