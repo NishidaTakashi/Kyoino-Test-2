@@ -11,3 +11,12 @@
 table{
   display: inline-block;
 }
+
+
+/* jqueryで新しくできたinput要素の大きさをコントロール */
+#updateStart{
+  width: 90px;
+}
+#updateRate{
+  width: 32px;
+}

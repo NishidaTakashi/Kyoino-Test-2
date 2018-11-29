@@ -1,144 +1,112 @@
-// (function(){
-//   'use strict';
-//   // var tds=document.getElementsByTagName('td')
-//   var start=document.getElementsByClassName("start");
-//   // var rate=document.getElementsByClassName("rate");
-//   var flag=1;//1．編集、-1.更新
-//
-//   // function update(){
-//   //   var i;
-//   //   for (var i = 0; i < tds.length; i++) {
-//   //     tds[i]. addEventListener("click",function(){
-//   //       // tds[i].
-//   //           console.log("start or rate");
-//   //         })
-//   //       }
-//   //     }
-//
-//   function updateStart(text){
-//     for (var i = 0; i < start.length; i++) {
-//       start[i]. addEventListener("click",function(){
-//         if (this.getAttribute("id")==="edit") {
-//           console.log("edit");
-//           return;
-//         }
-//         if (flag===-1) {
-//           //DB更新処理
-//           var edit=document.getElementById("edit");
-//           var text=edit.firstChild.value;
-//           var id=document.getElementById("id");
-//           var start=id.value;
-//           console.log(edit.children);
-//           console.log(text);
-//           console.log(start);
-//           jQuery(document).ready(function($){
-//             console.log("動く");
-//             console.log(text);
-//             $.post("tax2/update",{
-//               id:start,
-//               start:text
-//             });
-//             // $.ajax({
-//             //   type:"post",
-//             //   // url:"http://localhost/Kyoino-Test-2/index.php/tax2/update",
-//             //   url:"tax2/update",
-//             //   dataType:"json",
-//             //   data:{
-//             //     id:start,
-//             //     start:text,
-//             //     rate:"11"
-//             //   },
-//             //   success:function(data){
-//             //     alert("送信成功");
-//             //   },
-//             //   error:function(XMLHttpRequest, textStatus, errorThrown){
-//             //     alert("送信失敗");
-//             //     console.log("XMLHttpRequest : " + XMLHttpRequest.status);
-//             //     console.log("textStatus     : " + textStatus);
-//             //     console.log("errorThrown    : " + errorThrown.message);
-//             //   }
-//             // });
-//           });
-//           edit.textContent=text;
-//           edit.removeAttribute("id");
-//           flag *=-1;
-//           console.log(flag);
-//         }else if (flag===1) {
-//           var input = document.createElement("input");
-//           var input2 = document.createElement("input");
-//           var form = document.createElement("form");
-//           var text=this.textContent;
-//           var id=this.parentNode.lastElementChild.value;
-//           text=text.trim();
-//           console.log(text);
-//           console.log(id);
-//           this.textContent=null;
-//           this.appendChild(input);
-//           input.setAttribute("value",text);
-//           input.setAttribute("id","edited");
-//           this.setAttribute("id","edit");
-//           this.appendChild(input2);
-//           this.lastElementChild.setAttribute("value",id);
-//           this.lastElementChild.setAttribute("type","hidden");
-//           this.lastElementChild.setAttribute("id","id");
-//
-//
-//           console.log(this);
-//           flag *=-1;
-//           console.log(flag);
-//         }
-//       })
-//     }
-//   }
-//
-//
-//
-//   // function updateRate(){
-//   //   var i;
-//   //   for (var i = 0; i < rate.length; i++) {
-//   //     rate[i]. addEventListener("click",function(){
-//   //           console.log("rate");
-//   //         })
-//   //       }
-//   //     }
-//
-//   // update();
-//   updateStart();
-//
-//   // updateRate();
-//
-// })();
-
+//機能③　セルのアップデート処理
 jQuery(document).ready(function($){
-    var flag=1;//1．編集、-1.更新
+  //選択モードと編集モードを分けるためのフラグを定義
+  var flag=1;//1．選択モード、-1.編集モード
+  //更新されるid,開始日付,税率
+  var updateId;
+  var updateStart;
+  var updateRate;
+  //その他、テキスト
+  var text;
+  //テーブルのセルがクリックされたら…
   $("td").on("click",function(){
-    if ($(this).attr("class")==="start") {
-      if ($(this).attr("class")==="edit") {
-        console.log("edit");
-        return;
+    //編集中のセルだったらなにもしない
+    if ($(this).attr("class")==="edit start") {
+      return;
+    }
+    //選択モードなら
+    if (flag===1) {
+      //①inputに現在のデータを入れるための準備
+      //選択したセルからテキストを取得。空白は排除。
+      text=$(this).text().trim();
+      //それが"税率"だったら%が邪魔なので消しておく
+      if($(this).attr("class")==="rate"){
+        text=text.slice(0,-1);
       }
-      if (flag===-1) {
-        var text=$(".edit input").val();
-        console.log(text);
-        $(".edit").text(text);
-        $(".edit input").remove("input");
-        $(".edit").addClass("start");
-        $(".edit").removeClass("edit");
-        flag *=-1;
-        console.log(flag);
-      }else if (flag===1) {
-        var text=$(this).text();
-        text=text.trim();
-        $(this).text("");
-        $(this).addClass("edit");
-        // $(this).attr("id","edit");
-        $(this).append("<input type='text' name='edited'>");
-        $("input").attr("value",text);
+      //選択したセルの中身を消す
+      $(this).text("");
+      //更新idの取得
+      updateId=$(this).parent().children("input").val();
+
+      //②inputを作って、データを入れていく
+      //選択した列によって作成するinputを変える
+      //もし、"開始日付"を選択したら…
+      if ($(this).attr("class")==="start") {
+        //条件付きのinputを作成
+        $(this).append("<input type='tel' size='10' maxlength='10' pattern='\d{4}-\d{2}-\d{2}' id='updateStart'>");
+        //①で取得したデータをinputのvalに入れる
+        $("#updateStart").attr("value","");
+        //inputにカーソルがあたっているようにする
+        $("#updateStart").focus().val(text);
+        //編集の邪魔にならないようにstartを消しておく
         $(this).removeClass("start");
-        flag *=-1;
-        console.log(text);
-        console.log(flag);
+      //同様に"税率"を選択したら…（以下略）
+      }else if ($(this).attr("class")==="rate") {
+        $(this).append("<input type='number' id='updateRate'>%");
+        $("#updateRate").attr("value","");
+        $("#updateRate").focus().val(text);
+        $(this).removeClass("rate");
       }
+      //hidden属性でinputを作成し、updateIdを取得する準備をしておく
+      $(this).append("<input type='hidden' id='updateId'>");
+      $("#updateId").attr("value",updateId);
+
+      //③編集モードのための準備
+      //選択したセルと同じ行のtdにeditクラスをつける
+      $(this).parent().children("td").addClass("edit");
+      //フラグを更新へ
+      flag *=-1;
+
+    //もし、編集モードなら…
+    }else if(flag===-1){
+      //①データの取得
+      //更新するidを取得
+      updateId=$("#updateId").val();
+
+      //更新する開始日付及び税率を取得
+      //もし、"開始日付"が編集中なら…
+      if ($("#updateStart").length) {
+        //打ち込んだ内容を取得
+        updateStart=$("#updateStart").val();
+        //親要素のクラス名にstartを戻して、
+        $("#updateStart").parent().addClass("start");
+        //打ち込んだ内容を表示
+        $(".edit"+".start").text(updateStart);
+      //もし、"開始日付"が編集中ではないのなら…
+      }else {
+        //元々のデータを取得。その際に空白をトリム
+        updateStart=$(".start"+".edit").text().trim();
+      }
+
+      //もし、"税率"が編集中なら…
+      //以下同内容なので割愛。
+      if ($("#updateRate").length) {
+        updateRate=$("#updateRate").val();
+        text=updateRate+"%";
+        $("#updateRate").parent().addClass("rate");
+        $(".edit"+".rate").text(text);
+      }else {
+        updateRate=$(".rate"+".edit").text().trim().slice(0,-1);
+      }
+
+      //②取得したデータをpost送信
+      //取得した値をDBに送信
+      $.post("tax2/update",{
+        id:updateId,
+        start:updateStart,
+        rate:updateRate
+      });
+
+      //③選択モードのための準備
+      //変更されている部分を全部戻す
+      $(".edit input").remove("input");
+      $(".edit").removeClass("edit");
+      //フラグを選択モードに変更
+      flag *=-1;
+
+    //それ以外はなにもしない
+    }else{
+      return;
     }
   })
 })

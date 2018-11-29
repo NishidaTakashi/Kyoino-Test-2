@@ -14,30 +14,13 @@ class Tax2 extends CI_Controller {
 		$this->load->view("tax2",$data);
 	}
 
+	//jqueryから渡されてきたデータの処理
 	public function update(){
-		// // サーバ側でもってるデータ
-		// $array = array(
-		//     array('framework' => 'codeigniter', 'lang' => 'php',),
-		// );
+		//validationのルールぎめ
+		$this->form_validation->set_rules("start","開始日付","required");
+		$this->form_validation->set_rules("rate","税率","required");
 
-		// //postで送られてきたデータ
-		// $post_data = $this->input->post('start');
-		// $post_data = $this->input->post('id');
-		// $post_data = $this->input->post('rate');
-
-		// //postデータをもとに$arrayからデータを抽出
-		// $data = $array[$post_data];
-		//
-		// //$dataをJSONにして返す
-		// $this->output
-		// 		 ->set_content_type('application/json')
-		// 		 ->set_output(json_encode($data));
-
-		if ($this->input->post("start")) {
-			$this->form_validation->set_rules("start","開始日付","required");
-		}else if ($this->input->post("rate")) {
-			$this->form_validation->set_rules("rate","税率","required");
-		}
+		//異常がなければ、update関数を呼び出して元の画面へ
 		if ($this->form_validation->run() === FALSE) {
 			redirect("tax2","refresh");
 		}else {

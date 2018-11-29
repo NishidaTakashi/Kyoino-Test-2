@@ -11,8 +11,6 @@
 
       <h3>消費税設定の一覧</h3>
       <table class="database">
-        <!-- <?php echo form_open("tax2/update"); ?> -->
-
         <thead>
           <tr>
             <th>開始日付</th>
@@ -28,14 +26,13 @@
               <td class="rate">
               <?php echo $tax["rate"];?>%
               </td>
-              <input type="hidden" class="id" name="id" value="<?php echo $tax["id"]; ?>">
+              <!-- id取得用のinputタグ -->
+              <input type="hidden" class="id" value="<?php echo $tax['id']; ?>">
           </tr>
 
         <?php endforeach; ?>
 
         </tbody>
-        <!-- <?php echo form_close(); ?> -->
-
       </table>
     </div>
     <script src="<?php echo base_url();?>js/main.js" charset="utf-8"></script>
