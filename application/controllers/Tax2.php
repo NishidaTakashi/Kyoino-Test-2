@@ -10,7 +10,7 @@ class Tax2 extends CI_Controller {
     $this->load->library("session");
 		$this->load->model("Tax2_model");
 	}
-  
+
 	//ログイン画面へ
 	public function index(){
 		//一度ログインしているかどうかの判断
@@ -27,41 +27,44 @@ class Tax2 extends CI_Controller {
 		}
 	}
 
-	//メイン画面へ
-	public function tax2(){
-    $data["taxes"]=$this->Tax2_model->get_tax();
-		$this->load->view("tax2");
-	}
-
 	//ログイン処理
 	public function login(){
-
-		//validationルールの設定
-		$this->form_validation->set_rules("name","ID","trim|required",array(
-			"required" => "%s を入力していません。"
-		));
-		$this->form_validation->set_rules("password","パスワード","trim|required");
-
-		//ログインデータを取得
-		$data["user_name"]=$this->Tax2_model->login();
-
-		//validationのチェック
-		if ($this->form_validation->run() === false || $data["user_name"] === false) {
-			//NGでログイン画面に戻る
-			$this->load->view("user_login",$data);
-			//OKなら
-		}else{
-			//セッションデータの作成
-			$session_data=array(
-				//ログインデータを取得
-				"user_name"=>$this->Tax2_model->login(),
-				//ログインフラグ
-				"is_loggged_in"=>1
-			);
-			//セッションデータの追加
-			$this->session->set_userdata($session_data);
-			//メイン画面へ
+		//一度ログインしているかどうかの判断
+		if ($this->session->userdata("is_loggged_in")) {
+			//セッションに保存したnameを取得
+			$data["user_name"]=$this->session->userdata("user_name");
+			$data["taxes"]=$this->Tax2_model->get_tax();
+			//メイン画面で名前を表示
 			$this->load->view("tax2",$data);
+		//一度もログインしていなければ
+		}else{
+			//validationルールの設定
+			$this->form_validation->set_rules("name","ID","trim|required",array(
+				"required" => "%s を入力していません。"
+			));
+			$this->form_validation->set_rules("password","パスワード","trim|required");
+
+			//validationのチェック
+			if ($this->form_validation->run() === false) {
+				//NGでログイン画面に戻る
+				$this->load->view("user_login");
+				//OKなら
+			}else{
+				//ログインデータを取得
+				$data["user_name"]=$this->Tax2_model->login();
+				$data["taxes"]=$this->Tax2_model->get_tax();
+				//セッションデータの作成
+				$session_data=array(
+					//ログインデータを取得
+					"user_name"=>$this->Tax2_model->login(),
+					//ログインフラグ
+					"is_loggged_in"=>1
+				);
+				//セッションデータの追加
+				$this->session->set_userdata($session_data);
+				//メイン画面へ
+				$this->load->view("tax2",$data);
+			}
 		}
 	}
 
@@ -80,7 +83,6 @@ class Tax2 extends CI_Controller {
 		$this->form_validation->set_rules("password","パスワード","trim|required");
 		$this->form_validation->set_rules("re-password","再パスワード","trim|required|matches[password]");
 
-
 		//modelのadd関数を呼び出す
 		if ($this->form_validation->run() === false) {
 			$this->load->view("user_add");
@@ -89,7 +91,7 @@ class Tax2 extends CI_Controller {
 			redirect("tax2","refresh");
 		}
 	}
-  
+
   	//jqueryから渡されてきたデータの処理
 	public function update(){
 		//validationのルールぎめ
@@ -101,7 +103,10 @@ class Tax2 extends CI_Controller {
 			redirect("tax2","refresh");
 		}else {
 			$this->Tax2_model->update();
-			redirect("tax2","refresh");
+			$data["user_name"]=$this->session->userdata("user_name");
+      $data["taxes"]=$this->Tax2_model->get_tax();
+			//メイン画面で名前を表示
+			$this->load->view("tax2",$data);
 		}
 	}
 

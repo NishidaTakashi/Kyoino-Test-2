@@ -5,7 +5,7 @@
     <title>消費税設定</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="<?php echo base_url();?>css/styles.css">
-      <script src="<?php echo base_url();?>js/jquery-3.3.1.min.js"></script>
+    <script src="<?php echo base_url();?>js/jquery-3.3.1.min.js"></script>
   </head>
   <body>
     <div class="container">

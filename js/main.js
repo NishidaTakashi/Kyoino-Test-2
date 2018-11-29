@@ -212,10 +212,9 @@ jQuery(document).ready(function($){
       }else {
         updateRate=$(".rate"+".edit").text().trim().slice(0,-1);
       }
-
       //②取得したデータをpost送信
       //取得した値をDBに送信
-      $.post("tax2/update",{
+      $.post("update",{
         id:updateId,
         start:updateStart,
         rate:updateRate

@@ -23,6 +23,7 @@ class Tax2_model extends CI_Model{
     //update処理
     $this->db->where("id",$id);
     $this->db->update("tax2",$data);
+  }
 
   //新規登録画面の登録処理
   public function insert(){
