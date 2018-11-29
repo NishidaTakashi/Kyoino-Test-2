@@ -13,4 +13,19 @@ class Tax2 extends CI_Controller {
 		$data["taxes"]=$this->Tax2_model->get_tax();
 		$this->load->view("tax2",$data);
 	}
+
+	//jqueryから渡されてきたデータの処理
+	public function update(){
+		//validationのルールぎめ
+		$this->form_validation->set_rules("start","開始日付","required");
+		$this->form_validation->set_rules("rate","税率","required");
+
+		//異常がなければ、update関数を呼び出して元の画面へ
+		if ($this->form_validation->run() === FALSE) {
+			redirect("tax2","refresh");
+		}else {
+			$this->Tax2_model->update();
+			redirect("tax2","refresh");
+		}
+	}
 }
