@@ -135,7 +135,7 @@ jQuery(document).ready(function($){
   //テーブルのセルがクリックされたら…
   $("td").on("click",function(){
     //編集中のセルだったらなにもしない
-    if ($(this).attr("class")==="edit start") {
+    if ($(this).attr("class")==="edit") {
       return;
     }
     //選択モードなら
@@ -234,4 +234,3 @@ jQuery(document).ready(function($){
     }
   })
 })
-
