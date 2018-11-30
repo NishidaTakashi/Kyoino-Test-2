@@ -40,7 +40,7 @@ class Tax2_model extends CI_Model{
     $users=$query->row_array();
 
     //ハッシュ化したパスワードのすり合わせ
-    if (password_verify($_REQUEST['password'],$users["password"])) {
+    if ($this->input->post("name") && password_verify($_REQUEST['password'],$users["password"])) {
       //合ってるならデータを返す
       return $users;
     }else{
