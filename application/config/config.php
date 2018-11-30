@@ -24,8 +24,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 
-// $config['base_url'] = 'http://192.168.33.10:8000/';
-$config['base_url'] = 'http://localhost/Kyoino-Test-2/';
+$config['base_url'] = 'http://192.168.33.10:8000/';
+// $config['base_url'] = 'http://localhost/Kyoino-Test-2/';
 
 /*
 |--------------------------------------------------------------------------
@@ -382,9 +382,9 @@ $config['encryption_key'] = '';
 $config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_expiration'] = 7200;
-$config['sess_save_path'] = NULL;
+// $config['sess_save_path'] = NULL;
 //家のローカル開発環境でやるとき用のsession置き場
-// $config['sess_save_path'] = '/home/vagrant/Kyoino-Test-2-develop/session';
+$config['sess_save_path'] = '/home/vagrant/Kyoino-Test-2-develop/session';
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;

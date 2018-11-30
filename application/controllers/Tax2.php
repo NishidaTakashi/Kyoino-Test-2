@@ -38,6 +38,7 @@ class Tax2 extends CI_Controller {
 			$this->load->view("tax2",$data);
 		//一度もログインしていなければ
 		}else{
+			$data["user_name"]=$this->Tax2_model->login();
 			//validationルールの設定
 			$this->form_validation->set_rules("name","ID","trim|required",array(
 				"required" => "%s を入力していません。"
@@ -45,13 +46,12 @@ class Tax2 extends CI_Controller {
 			$this->form_validation->set_rules("password","パスワード","trim|required");
 
 			//validationのチェック
-			if ($this->form_validation->run() === false) {
+			if ($this->form_validation->run() === false || $data["user_name"] === false) {
 				//NGでログイン画面に戻る
 				$this->load->view("user_login");
 				//OKなら
 			}else{
 				//ログインデータを取得
-				$data["user_name"]=$this->Tax2_model->login();
 				$data["taxes"]=$this->Tax2_model->get_tax();
 				//セッションデータの作成
 				$session_data=array(
