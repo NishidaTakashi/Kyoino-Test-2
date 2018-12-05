@@ -9,6 +9,7 @@ class Tax2_model extends CI_Model{
 
 
   public function get_tax(){
+    $this->db->order_by("start","ASC");
     $query=$this->db->get("tax2");
     return $query->result_array();
   }

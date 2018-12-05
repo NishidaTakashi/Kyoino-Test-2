@@ -21,7 +21,7 @@
         </p>
         <p>
           <label for="password">パスワード</label>
-          <input type="text" name="password" value="<?php echo set_value('password'); ?>">
+          <input type="password" name="password" maxlength="10" value="<?php echo set_value('password'); ?>">
         </p>
       </div>
       <p>

@@ -180,56 +180,109 @@ jQuery(document).ready(function($){
       $(this).parent().children("td").addClass("edit");
       //フラグを更新へ
       flag *=-1;
+      console.log(text);
 
     //もし、編集モードなら…
     }else if(flag===-1){
-      //①データの取得
-      //更新するidを取得
-      updateId=$("#updateId").val();
-
-      //更新する開始日付及び税率を取得
-      //もし、"開始日付"が編集中なら…
-      if ($("#updateStart").length) {
-        //打ち込んだ内容を取得
-        updateStart=$("#updateStart").val();
-        //親要素のクラス名にstartを戻して、
-        $("#updateStart").parent().addClass("start");
-        //打ち込んだ内容を表示
-        $(".edit"+".start").text(updateStart);
-      //もし、"開始日付"が編集中ではないのなら…
-      }else {
-        //元々のデータを取得。その際に空白をトリム
-        updateStart=$(".start"+".edit").text().trim();
-      }
-
-      //もし、"税率"が編集中なら…
-      //以下同内容なので割愛。
-      if ($("#updateRate").length) {
-        updateRate=$("#updateRate").val();
-        text=updateRate+"%";
-        $("#updateRate").parent().addClass("rate");
-        $(".edit"+".rate").text(text);
-      }else {
-        updateRate=$(".rate"+".edit").text().trim().slice(0,-1);
-      }
-      //②取得したデータをpost送信
-      //取得した値をDBに送信
-      $.post("update",{
-        id:updateId,
-        start:updateStart,
-        rate:updateRate
-      });
-
-      //③選択モードのための準備
-      //変更されている部分を全部戻す
-      $(".edit input").remove("input");
-      $(".edit").removeClass("edit");
-      //フラグを選択モードに変更
-      flag *=-1;
+      //update関数の呼び出し
+      update();
 
     //それ以外はなにもしない
     }else{
       return;
     }
   })
+
+  //追加：エンターキーを押された時の更新してみる
+  $(window).on("keydown",function(e){
+    if (flag===-1 && e.which===13) {
+      update();
+    }
+  })
+
+  function update(){
+    //①データの取得
+    //更新するidを取得
+    updateId=$("#updateId").val();
+    console.log(text);
+
+    //更新する開始日付及び税率を取得
+    //もし、"開始日付"が編集中なら…
+    if ($("#updateStart").length) {
+      //打ち込んだ内容を取得
+      updateStart=$("#updateStart").val();
+      //親要素のクラス名にstartを戻して、
+      $("#updateStart").parent().addClass("start");
+      //打ち込んだ内容を表示
+      $(".edit"+".start").text(updateStart);
+    //もし、"開始日付"が編集中ではないのなら…
+    }else {
+      //元々のデータを取得。その際に空白をトリム
+      updateStart=$(".start"+".edit").text().trim();
+    }
+
+    //もし、"税率"が編集中なら…
+    //以下同内容なので割愛。
+    if ($("#updateRate").length) {
+      updateRate=$("#updateRate").val();
+      var ratetext=updateRate+"%";
+      $("#updateRate").parent().addClass("rate");
+      $(".edit"+".rate").text(ratetext);
+    }else {
+      updateRate=$(".rate"+".edit").text().trim().slice(0,-1);
+    }
+
+    //追加：updateStart及びupdateRateのvalidation
+    if (!updateStart.match(/\d{4}-\d{2}-\d{2}/) || !updateRate.match(/^\d*$/)) {
+      console.log("validationエラー");
+      //③選択モードのための準備
+      //変更されている部分を全部戻す
+      var test=$("#updateStart").parent();
+      console.log(test);
+      $(".edit input").remove("input");
+      $(".edit").removeClass("edit");
+      //フラグを選択モードに変更
+      flag *=-1;
+      return;
+    }
+
+
+    //②取得したデータをpost送信
+    //取得した値をDBに送信
+    // $.post("update",{
+    //   id:updateId,
+    //   start:updateStart,
+    //   rate:updateRate
+    // });
+
+    //追加：ajaxを使ってかつjson形式で書いてみる
+    //結論：json形式では何故かerrorになる。今後、時間があるときにやってみる
+    var data={
+      id:updateId,
+      start:updateStart,
+      rate:updateRate
+    };
+    console.log(data);
+    console.log(JSON.stringify(data));
+    $.ajax({
+      type:"post",
+      url:"update",
+      data:data,
+
+      success: function(data){
+        alert("送信成功");
+      },
+      error: function(data){
+        alert("送信失敗");
+      }
+    })
+
+    //③選択モードのための準備
+    //変更されている部分を全部戻す
+    $(".edit input").remove("input");
+    $(".edit").removeClass("edit");
+    //フラグを選択モードに変更
+    flag *=-1;
+
+  }
 })

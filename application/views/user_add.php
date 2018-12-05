@@ -22,11 +22,11 @@
         </p>
         <p>
           <label for="password">パスワード</label>
-          <input type="text" name="password" value="<?php echo set_value('password'); ?>">
+          <input type="password" name="password" maxlength="10" value="<?php echo set_value('password'); ?>">
         </p>
         <p>
           <label for="re-password">再パスワード</label>
-          <input type="text" name="re-password" value="<?php echo set_value('re-password'); ?>">
+          <input type="password" name="re-password" maxlength="10" value="<?php echo set_value('re-password'); ?>">
         </p>
       </div>
 
